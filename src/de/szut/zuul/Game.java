@@ -86,25 +86,7 @@ public class Game
 
     private void printRoomInformation() {
         System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if(currentRoom.upExit != null) {
-            System.out.print("up ");
-        }
-        if(currentRoom.downExit != null) {
-            System.out.print("down ");
-        }
+        System.out.print("Exits: " + currentRoom.exitsToString());
     }
 
     private boolean processCommand(Command command) 
@@ -139,7 +121,8 @@ public class Game
         System.out.println("   go quit help");
     }
 
-    private void goRoom(Command command) // Try to go in one direction. If there is an exit, enter the new room, otherwise print an error message.
+    // Try to go in one direction. If there is an exit, enter the new room, otherwise print an error message.
+    private void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
@@ -150,26 +133,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave the current room.
-        Room nextRoom = null;
-
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("up")) {
-            nextRoom = currentRoom.upExit;
-        }
-        if(direction.equals("down")) {
-            nextRoom = currentRoom.downExit;
-        }
+        Room nextRoom =  currentRoom.getExit(direction);;
 
         if (nextRoom == null) {
             System.out.println("There is no door!");

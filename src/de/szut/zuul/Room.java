@@ -7,13 +7,13 @@ package de.szut.zuul;
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room upExit;
-    public Room downExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room upExit;
+    private Room downExit;
 
     // Room description is something like "a kitchen" or "an open courtyard".
     public Room(String description)
@@ -30,6 +30,30 @@ public class Room
         if (west != null)  westExit = west;
         if (up != null)    upExit = up;
         if (down != null)  downExit = down;
+    }
+
+    public Room getExit(String direction) {
+        return switch (direction) {
+            case "north" -> northExit;
+            case "east" -> eastExit;
+            case "south" -> southExit;
+            case "west" -> westExit;
+            case "up" -> upExit;
+            case "down" -> downExit;
+            default -> null;
+        };
+    }
+
+    public String exitsToString (){
+        StringBuilder sb = new StringBuilder();
+
+        if (northExit != null) sb.append("north ");
+        if (eastExit != null)  sb.append("east ");
+        if (southExit != null) sb.append("south ");
+        if (westExit != null)  sb.append("west ");
+        if (upExit != null)    sb.append("up ");
+        if (downExit != null)  sb.append("down ");
+        return sb.toString();
     }
 
     public String getDescription() // R
