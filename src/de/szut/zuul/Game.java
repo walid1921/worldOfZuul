@@ -5,13 +5,15 @@ public class Game
     private Parser parser;
     private Room currentRoom;
 
-    public Game()  // Create the game and initialise its internal map.
+    //! Create the game and initialise its internal map.
+    public Game()
     {
         createRooms(); // build the internal map
         parser = new Parser(); // prepare input parsing
     }
 
-    private void createRooms() // Create all the rooms and link their exits together.
+    //! Create all the rooms and link their exits together.
+    private void createRooms()
     {
         Room marketsquare, templePyramid, tavern, sacrificialSite, hut, jungle, wizardRoom, cellar, secretPassage, cave, beach;
       
@@ -28,28 +30,40 @@ public class Game
         cave = new Room("in a cave");
         beach = new Room("on the beach");
 
-        // initialise room exits
-        marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
+        marketsquare.setExit("north", tavern);
+        marketsquare.setExit("east", templePyramid);
+        marketsquare.setExit("west", sacrificialSite);
 
-        templePyramid.setExits(hut, null, null, marketsquare, wizardRoom, cellar);
+        templePyramid.setExit("north", hut);
+        templePyramid.setExit("west", marketsquare);
+        templePyramid.setExit("up", wizardRoom);
+        templePyramid.setExit("down", cellar);
 
-        tavern.setExits(null, hut, marketsquare, null, null, null);
+        tavern.setExit("east", hut);
+        tavern.setExit("south", marketsquare);
 
-        sacrificialSite.setExits(null, marketsquare, null, null, null, cave);
+        sacrificialSite.setExit("east", marketsquare);
+        sacrificialSite.setExit("down", cave);
 
-        hut.setExits(null, jungle, templePyramid, tavern, null, null);
+        hut.setExit("east", jungle);
+        hut.setExit("south", templePyramid);
+        hut.setExit("west", tavern);
 
-        jungle.setExits(null, null, null, hut, null, null);
+        jungle.setExit("west", hut);
 
-        wizardRoom.setExits(null, null, null, null, null, templePyramid);
+        wizardRoom.setExit("down", templePyramid);
 
-        cellar.setExits(null, null, null, secretPassage, templePyramid, null);
+        cellar.setExit("up", templePyramid);
+        cellar.setExit("west", secretPassage);
 
-        secretPassage.setExits(null, cellar, null, cave, null, null);
+        secretPassage.setExit("east", cellar);
+        secretPassage.setExit("west", cave);
 
-        cave.setExits(null, secretPassage, beach, null, sacrificialSite, null);
+        cave.setExit("east", secretPassage);
+        cave.setExit("south", beach);
+        cave.setExit("up", sacrificialSite);
 
-        beach.setExits(cave, null, null, null, null, null);
+        beach.setExit("north", cave);
 
         // templePyramid up -> wizardRoom, and wizardRoom down -> templePyramid
         // templePyramid down -> cellar, and cellar up -> templePyramid
@@ -61,6 +75,7 @@ public class Game
         currentRoom = marketsquare;  // start game on marketsquare
     }
 
+    //! Play
     public void play() // Main play routine.  Loops until end of play.
     {            
         printWelcome();
@@ -73,6 +88,7 @@ public class Game
         System.out.println("Thank you for playing.  Good bye.");
     }
 
+    //! Welcome
     private void printWelcome() // Print out the opening message for the player.
     {
         System.out.println();
@@ -84,11 +100,13 @@ public class Game
         System.out.println();
     }
 
+    //! Print out information about the current room
     private void printRoomInformation() {
         System.out.println("You are " + currentRoom.getDescription());
         System.out.print("Exits: " + currentRoom.exitsToString());
     }
 
+    //! Cmd Process a command. Return true if the command ends the game, false otherwise.
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
@@ -112,6 +130,7 @@ public class Game
         return wantToQuit;
     }
 
+    //! Help
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
@@ -121,11 +140,12 @@ public class Game
         System.out.println("   go quit help");
     }
 
+    //! Go
     // Try to go in one direction. If there is an exit, enter the new room, otherwise print an error message.
     private void goRoom(Command command)
     {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
+
+        if(!command.hasSecondWord()) { // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
         }
@@ -145,9 +165,10 @@ public class Game
         }
     }
 
+    //! Quit
     private boolean quit(Command command) // "Quit" was entered. Check the rest of the command to see whether we really quit the game.
     {
-        if(command.hasSecondWord()) {
+        if(command.hasSecondWord()) { // if there is no second word, we don't know what to quit...
             System.out.println("Quit what?");
             return false;
         }
