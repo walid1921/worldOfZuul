@@ -102,8 +102,7 @@ public class Game
 
     //! Print out information about the current room
     private void printRoomInformation() {
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: " + currentRoom.exitsToString());
+        System.out.println(currentRoom.getLongDescription());
     }
 
     //! Cmd Process a command. Return true if the command ends the game, false otherwise.
