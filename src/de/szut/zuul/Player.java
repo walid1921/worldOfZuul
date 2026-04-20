@@ -82,15 +82,15 @@ public class Player {
     }
 
     public void heal() {
-        currentState.heal(this);
+        currentState = currentState.heal();
     }
 
     public void injureEasily() {
-        currentState.injureEasily(this);
+        currentState = currentState.injureEasily();
     }
 
     public void injureHeavy() {
-        currentState.injureHeavy(this);
+        currentState = currentState.injureHeavy();
     }
 
     private double calculateWeight() {

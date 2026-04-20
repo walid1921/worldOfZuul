@@ -16,17 +16,17 @@ public class Immobile implements State {
     }
 
     @Override
-    public void heal(Player player) {
-        player.setCurrentState(Wounded.getInstance());
+    public State heal() {
+        return Wounded.getInstance();
     }
 
     @Override
-    public void injureEasily(Player player) {
-        System.out.println("You are already immobile.");
+    public State injureEasily() {
+        return Immobile.getInstance();
     }
 
     @Override
-    public void injureHeavy(Player player) {
-        System.out.println("You are already immobile.");
+    public State injureHeavy() {
+        return Immobile.getInstance();
     }
 }

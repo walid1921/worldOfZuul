@@ -16,17 +16,17 @@ public class Wounded implements State {
     }
 
     @Override
-    public void heal(Player player) {
-        player.setCurrentState(Healthy.getInstance());
+    public State heal() {
+        return Healthy.getInstance();
     }
 
     @Override
-    public void injureEasily(Player player) {
-        player.setCurrentState(Immobile.getInstance());
+    public State injureEasily() {
+        return Immobile.getInstance();
     }
 
     @Override
-    public void injureHeavy(Player player) {
-        player.setCurrentState(Immobile.getInstance());
+    public State injureHeavy() {
+        return Immobile.getInstance();
     }
 }

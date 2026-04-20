@@ -16,18 +16,17 @@ public class Healthy implements State {
     }
 
     @Override
-    public void heal(Player player) {
-        // already healthy, nothing happens
-        System.out.println("You are already healthy.");
+    public State heal() {
+        return this;
     }
 
     @Override
-    public void injureEasily(Player player) {
-        player.setCurrentState(Wounded.getInstance());
+    public State injureEasily() {
+        return Wounded.getInstance();
     }
 
     @Override
-    public void injureHeavy(Player player) {
-        player.setCurrentState(Immobile.getInstance());
+    public State injureHeavy() {
+        return Immobile.getInstance();
     }
 }
