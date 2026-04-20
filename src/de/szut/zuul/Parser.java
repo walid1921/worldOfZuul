@@ -23,9 +23,6 @@ public class Parser
         reader = new Scanner(System.in);
     }
 
-    /**
-     * @return The next command from the user.
-     */
     public Command getCommand() 
     {
         String inputLine;   // will hold the full input line
@@ -54,5 +51,9 @@ public class Parser
         else {
             return new Command(null, word2); 
         }
+    }
+
+    public String showCommands() {
+        return this.commands.showAll();
     }
 }

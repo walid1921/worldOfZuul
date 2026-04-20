@@ -4,7 +4,7 @@ public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-        "go", "quit", "help"
+        "go", "quit", "help", "look", "take", "drop", "items", "status", "injure", "heal", "eat"
     };
 
     public CommandWords()
@@ -20,5 +20,13 @@ public class CommandWords
                 return true;
         }
         return false; // the string was not found in the commands
+    }
+
+    public String showAll() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String command : validCommands){
+            stringBuilder.append(command).append(" "); // add a space after each command for better readability
+        }
+        return stringBuilder.toString();
     }
 }

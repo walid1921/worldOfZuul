@@ -11,12 +11,14 @@ public class Room
 {
     private String description;
     private final HashMap<String, Room> exits; // stores exits of this room.
+    private final HashMap<String, Item> items; // stores items in this room.
 
     // Room description is something like "a kitchen" or "an open courtyard".
     public Room(String description)
     {
         this.description = description;
         this.exits = new HashMap<>();
+        this.items= new HashMap<>();
     }
 
     // Define the exits of this room.  Every direction either leads to another room or is null (no exit there).
@@ -46,8 +48,40 @@ public class Room
         return description;
     }
 
-    public String getLongDescription() {
-        return "You are " + description + ".\nExits: " + exitsToString();
+    public String getLongDescription()
+    {
+        return "You are " + description + ".\n"
+                + "Exits: " + exitsToString() + "\n"
+                + "Items in this room: " + getItemsToString();
+    }
+
+    public void putItem (Item newItem) {
+        if (newItem == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
+        this.items.put(newItem.getName(), newItem);
+    }
+
+    public Item removeItem (String name) {
+        if (name == null) {
+            return null;
+        }
+
+        return this.items.remove(name);
+    }
+
+    public String getItemsToString() {
+        if (items.isEmpty()) {
+            return "none";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Item item : items.values() ) {
+            sb.append(item.getName()).append(", ");
+        }
+
+        return sb.toString().trim();
     }
 
 }
